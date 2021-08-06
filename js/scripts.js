@@ -18,26 +18,9 @@ document.getElementById("filtrar").addEventListener("change",filtrarPorTransacci
 
 
 
-if (Anuncios.length != null) {
-  
+if (Anuncios.length != null) {  
     getDatosFech();
-    handlerLoadTabla();
- 
-  // document.querySelector(".pepe").value = 2;
-  // console.log(document.querySelector(".pepe").value);
-  
-}
-
-function cargarInput(){
-  let precios = Anuncios.map(obj=>{
-    return obj.precio;
-  })
-  console.log(precios);
-   const numeros = precios.reduce((prev,actual)=>{
-    return  parseInt(prev)  + parseInt(actual) / precios.length;
-  });   
-
-  document.querySelector(".pepe").value = 23;
+    handlerLoadTabla();     
 }
 
 function altaAnuncio(anuncio) {
@@ -52,6 +35,7 @@ function almacenarDatos(data) {
 
 function handlerLoadTabla() {
   renderizarTabla(crearTabla(Anuncios), document.getElementById("divTabla"));
+ 
 }
 
 function renderizarTabla(tabla, contenedor) {
@@ -140,7 +124,7 @@ function cargarFormulario(id) {
      })
      renderizarTabla(crearTabla(nuevoArray), document.getElementById("divTabla"));
      altaAnuncio(aux);
-
+     
 }
 
 function filtrarPorTransaccion(){
@@ -170,8 +154,20 @@ function filtrarPorTransaccion(){
            return  minimo;
          });
 
+         const arrayprecio3 = nuevoArray.map(bj=>{
+          return bj.precio ;
+        });
+        const precio3 = arrayprecio3.reduce((prev,actual)=>{
+          let minimo =parseInt(prev);
+          if(minimo < parseInt(actual) ){
+            minimo = parseInt(actual);
+          }
+             return  minimo;
+           });
+
        document.querySelector(".pepe").value = precio;
        document.querySelector(".pepa").value = precio2;
+       document.querySelector(".maximo").value = precio3;
 
     renderizarTabla(crearTabla(nuevoArray), document.getElementById("divTabla"));
   }
@@ -182,15 +178,19 @@ function filtrarPorTransaccion(){
       
       return bj.transaccion == "Alquiler";
     });
-    const arrayPrecios1 = nuevoArray1.map(bj=>{
+    const nuevoArray = Anuncios.filter(bj=>{
+      
+      return bj.transaccion == "Venta" ;
+    });
+    const arrayPrecios = nuevoArray.map(bj=>{
       return bj.precio ;
     });
-
-    const precio1 = arrayPrecios1.reduce((prev,actual)=>{
+    console.log(arrayPrecios);
+    const precio = arrayPrecios.reduce((prev,actual)=>{
          return  parseInt(prev)  + parseInt(actual) / arrayPrecios.length;
        });
-
-       const arrayprecio2 = nuevoArray1.map(bj=>{
+    
+       const arrayprecio2 = nuevoArray.map(bj=>{
         return bj.precio ;
       });
       const precio2 = arrayprecio2.reduce((prev,actual)=>{
@@ -201,9 +201,23 @@ function filtrarPorTransaccion(){
            return  minimo;
          });
 
-       document.querySelector(".pepe").value = precio1;
+         const arrayprecio3 = nuevoArray.map(bj=>{
+          return bj.precio ;
+        });
+        const precio3 = arrayprecio3.reduce((prev,actual)=>{
+          let minimo =parseInt(prev);
+          if(minimo < parseInt(actual) ){
+            minimo = parseInt(actual);
+          }
+             return  minimo;
+           });
+
+       document.querySelector(".pepe").value = precio;
        document.querySelector(".pepa").value = precio2;
-    renderizarTabla(crearTabla(nuevoArray1), document.getElementById("divTabla"));
+       document.querySelector(".maximo").value = precio3;
+
+    renderizarTabla(crearTabla(nuevoArray), document.getElementById("divTabla"));
+    
   }
 
   if(document.getElementById("filtrar").value == "N/A"){
@@ -363,7 +377,8 @@ function getDatosFech (){
   .catch(err=>{
     console.error(`Error: ${err.status}:${err.statusText}`);
   })
-  
+
+    
 }
 
 

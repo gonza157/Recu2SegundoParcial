@@ -73,6 +73,12 @@ p{
     
 }
 
+#maximo{
+    display: flex;
+    flex-direction: column;
+    
+}
+
 /* .ch{
     display: flex;
     flex-direction: column;    
