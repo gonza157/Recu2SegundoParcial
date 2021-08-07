@@ -35,7 +35,17 @@ function almacenarDatos(data) {
 
 function handlerLoadTabla() {
   renderizarTabla(crearTabla(Anuncios), document.getElementById("divTabla"));
- 
+  ultimosAnuncios();
+}
+
+function ultimosAnuncios(){
+  let aux = new Object;
+  const elArray = Anuncios.map(obj=>{
+    aux.id = obj.id;
+    aux.fecha = obj.fecha;
+    return aux;
+  });
+  renderizarTabla(crearTabla(elArray), document.getElementById("divAnuncios"));
 }
 
 function renderizarTabla(tabla, contenedor) {
